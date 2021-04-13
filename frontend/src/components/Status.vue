@@ -1,52 +1,55 @@
 <template>
-  <div>
-    <v-container>
-      <v-treeview :items="status" open-all activatable shaped></v-treeview>
-    </v-container>
-  </div>
+  <v-data-table
+    :headers="headers"
+    :items="status"
+    :items-per-page="5"
+    class="elevation-1"
+  ></v-data-table>
 </template>
 
 <script>
+import { EventBus } from "../main";
+
 export default {
   name: "Status",
   created() {
-    let self = this;
-    this.$axios.get(this.$api + "status/").then((res) => {
-      let data = res.data.data;
-      this.status = [];
-      let cnt = 0;
-      Object.keys(data).forEach(function (l) {
-        cnt += 1;
-        let level = { id: cnt, name: "Level " + l, children: [] };
-        Object.keys(data[l]).forEach(function (t) {
-          cnt += 1;
-          let ty = { id: cnt, name: t, children: [] };
-          level["children"].push(ty);
-          Object.keys(data[l][t]).forEach(function (s) {
-            cnt += 1;
-            let st = { id: cnt, name: s + data[l][t][s], children: ["1"] };
-            ty["children"].push(st);
-          });
-        });
-        self.status.push(level);
-      });
-      console.log(this.status);
+    this.getStatus();
+    EventBus.$on("refresh", (e) => {
+      this.getStatus();
+      console.log(e);
     });
   },
   data() {
     return {
-      status: [
-        {
-          id: 1,
-          name: "Applications :",
-          children: [
-            { id: 2, name: "Calendar : app" },
-            { id: 3, name: "Chrome : app" },
-            { id: 4, name: "Webstorm : app" },
-          ],
-        },
+      headers: [
+        { text: "Level", value: "Level" },
+        { text: "Vehicle Type", value: "VehicleType" },
+        { text: "Total Spot", value: "TotalSpots" },
+        { text: "Reserved Spots", value: "ReservedSpots" },
+        { text: "Free Spots", value: "FreeSpots" },
       ],
+      status: [],
     };
+  },
+  methods: {
+    getStatus() {
+      let self = this;
+      this.$axios.get(this.$api + "status/").then((res) => {
+        let data = res.data.data;
+        this.status = [];
+        Object.keys(data).forEach(function (l) {
+          Object.keys(data[l]).forEach(function (t) {
+            self.status.push({
+              Level: l,
+              VehicleType: t,
+              TotalSpots: data[l][t]["all"],
+              ReservedSpots: data[l][t]["taken"],
+              FreeSpots: data[l][t]["free"],
+            });
+          });
+        });
+      });
+    },
   },
 };
 </script>

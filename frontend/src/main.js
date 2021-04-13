@@ -11,6 +11,7 @@ Vue.config.productionTip = false
 
 Vue.prototype.$axios = axios
 Vue.prototype.$api = 'http://localhost:8088/'
+export const EventBus = new Vue();
 
 new Vue({
   vuetify,

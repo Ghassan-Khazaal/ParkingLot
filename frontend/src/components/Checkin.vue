@@ -1,23 +1,29 @@
 <template>
-  <v-form style="max-width: 300px" ref="form" >
-    <v-text-field
-      v-model="vehicleId"
-      label="Vehicle Id"
-      required
-    ></v-text-field>
-    <v-select
-      v-model="vehicleType"
-      :items="vehicleTypes"
-      item-text="name"
-      label="VehicleType"
-      return-object
-    ></v-select>
-    <v-btn @click="submit">Submit</v-btn>
-    {{ msg }}
-  </v-form>
+  <v-card style="padding: 20px; margin: 1px">
+    <v-form style="max-width: 300px" ref="form">
+      <v-text-field
+        v-model="vehicleId"
+        label="Vehicle Id"
+        required
+      ></v-text-field>
+      <v-select
+        v-model="vehicleType"
+        :items="vehicleTypes"
+        item-text="name"
+        label="VehicleType"
+        return-object
+      ></v-select>
+      <v-btn @click="submit" :disabled="!vehicleId || !vehicleType" style="margin-right: 5px;"
+        >Submit</v-btn
+      >
+      {{ msg }}
+    </v-form>
+  </v-card>
 </template>
 
 <script>
+import { EventBus } from '../main';
+
 export default {
   name: "CheckIn",
   data() {
@@ -44,11 +50,17 @@ export default {
       this.$axios
         .post(this.$api + "reserve/", formData)
         .then((res) => {
-          if (res.data.data.constructor == Object){
-              this.msg = "Level " + res.data.data.level + " - " + res.data.data.label + " Reserved";
+          if (res.data.data.constructor == Object) {
+            this.msg =
+              "Level " +
+              res.data.data.level +
+              " - " +
+              res.data.data.label +
+              " Reserved";
           } else {
-              this.msg = res.data.data
+            this.msg = res.data.data;
           }
+          EventBus.$emit('refresh')
         })
         .catch((err) => {
           this.msg = "error!";

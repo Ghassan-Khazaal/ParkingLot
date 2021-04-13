@@ -1,8 +1,7 @@
 <template>
-
   <v-row align-center justify-center>
-    <v-col >
-      <v-card color="basil" class="text-center justify-center ">
+    <v-col>
+      <v-card color="#abb6bf" class="text-center justify-center">
         <v-card-title class="text-center justify-center py-6">
           <h1 class="font-weight-bold display-3 basil--text">Vence Garage</h1>
         </v-card-title>
@@ -31,7 +30,6 @@
       </v-card>
     </v-col>
   </v-row>
-
 </template> 
 
 <script>
