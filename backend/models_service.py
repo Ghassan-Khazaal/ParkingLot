@@ -202,6 +202,7 @@ def getVehicleTypes():
 
 # FOR TESTING ONLY
 def initdb():
+    Reservation.query.delete()
     ParkingSpot.query.delete()
     Level.query.delete()
     VehicleType.query.delete()
