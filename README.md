@@ -13,19 +13,15 @@ This project is made of 4 separate Docker containers that holds:
 
 ### Prerequisites
 
-In order to run this application you need to install three tools: **Docker** & **Docker Compose** & **Docker Machine**.
+In order to run this application you need to install two tools: **Docker** & **Docker Compose**.
 
 Instructions how to install **Docker** on [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [Windows](https://docs.docker.com/docker-for-windows/install/), [Mac](https://docs.docker.com/docker-for-mac/install/).
 
 **Docker Compose** is already included in installation packs for *Windows* and *Mac*, so only Ubuntu users needs to follow [this instructions](https://docs.docker.com/compose/install/).
 
-**Docker Machine** [installation](https://docs.docker.com/machine/install-machine/)
-
 ### How to run it?
 Run the following commands
 ```
-$ docker-machine create -d virtualbox garage
-$ eval "$(docker-machine env garage)"
 $ docker-compose up --build -d
 $ docker-compose run backend /usr/local/bin/python create_db.py
 ```
@@ -38,12 +34,6 @@ If you want to stop it, use the following command:
 
 ```
 $ docker-compose down
-```
-
-Use the following command to get the machine ip address to access the app
-
-```
-$ docker-machine ls
 ```
 
 ---
@@ -73,9 +63,9 @@ postgres:
 This is a Flask application that connects with a
 database and expose the REST endpoints that can be consumed by
 frontend.
-The backend will be running on http://MACHINE_IP:8000
+The backend will be running on http://localhost:8000/
 
-The admin dashboard can be accessed on http://MACHINE_IP:8000/admin
+The admin dashboard can be accessed on http://localhost:8000/admin/
 Open endpoints
 
 * [ReserveSpot](.apidoc/reserve.md) : `POST /reserve/`
@@ -97,7 +87,7 @@ in a file *backend/Dockerfile*.
 It's the UI that consumes the REST API endpoints provided by
 *backend*.
 
-It can be entered using link: **http://MACHINE_IP/**
+It can be entered using link: **http://localhost/**
 
 #### nginx
 
