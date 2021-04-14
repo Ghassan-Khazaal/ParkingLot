@@ -89,6 +89,9 @@ It's the UI that consumes the REST API endpoints provided by
 
 It can be entered using link: **http://localhost/**
 
+This server is also put in Docker container and its definition can be found
+in a file *frontend/Dockerfile*. 
+
 #### nginx
 
 The entry point, allows access to the frontend and the backend.
