@@ -10,7 +10,7 @@ Vue.use(VueAxios, axios)
 Vue.config.productionTip = false
 
 Vue.prototype.$axios = axios
-Vue.prototype.$api = 'http://3.143.203.6:8000/'
+Vue.prototype.$api = 'http://localhost:8000/'
 export const EventBus = new Vue();
 
 new Vue({
