@@ -58,7 +58,7 @@ def __getSpotsStatus():
     """
     sq1 = db.session.query(ParkingSpot.levelId, ParkingSpot.vehicleTypeId, VehicleType.name, func.count(ParkingSpot.id).label('allSpots')) \
                     .join(VehicleType, ParkingSpot.vehicleTypeId == VehicleType.id) \
-                    .group_by(ParkingSpot.levelId, ParkingSpot.vehicleTypeId) \
+                    .group_by(ParkingSpot.levelId, ParkingSpot.vehicleTypeId, VehicleType.name) \
                     .subquery()
 
     sq2 = db.session.query(ParkingSpot.vehicleTypeId, ParkingSpot.levelId, func.count(Reservation.id).label('reservedSpots')) \
