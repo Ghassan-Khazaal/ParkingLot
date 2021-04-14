@@ -75,7 +75,7 @@ Open endpoints
 * [GetVehicleTypes](.apidoc/vtypes.md) : `GET /vtypes/`
 
 FOR TESTING ONLY
-* [InitDB](md/reserve.md) : `POST /init/`
+* [InitDB](md/.apidoc/init.md) : `POST /init/`
 
 This app is also put in Docker container and its definition can be found
 in a file *backend/Dockerfile*. 
